@@ -1,5 +1,11 @@
 :root {
-  /* Variables CSS */
+  --body-bg: #fafafa;
+  --header-image: url('../assets/images/bg-mobile-light.jpg');
+  --task-bg: #fff;
+  --text-color: #494c6b;
+  --text-color-completed: #9092a5;
+  --placeholder-color: #9495a5;
+  --tasks-shadow: rgba(170, 170, 170, 0.3);
 }
 
 /* Variables SASS */

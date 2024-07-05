@@ -1,0 +1,26 @@
+.filters {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 3rem;
+    padding-inline: 5.0625rem;
+    background-color: var(--task-bg);
+    border-radius: 0.3125rem;
+  }
+
+  .filter {
+    background: none;
+    border: none;
+    color: var(--text-color-completed);
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .filter--active {
+    color: #3a7cfd;
+  }
+  
+  .click-element {
+    cursor: pointer;
+  }
