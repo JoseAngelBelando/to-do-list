@@ -4,7 +4,7 @@
 
 ## Ejemplo en vivo
 
-- [URL-de-github-pages-de-este-proyecto](URL-de-github-pages-de-este-proyecto)
+- [[URL-de-github-pages-de-este-proyecto](https://github.com/JoseAngelBelando/to-do-list)]
 
 ## Descripción 📑
 
