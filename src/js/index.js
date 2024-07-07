@@ -1,5 +1,7 @@
 // El styles lo importamos aquí, ya se carga después al compilar todo
 import '../scss/styles.scss';
+//1 Carga de módulos y observador de mutaciones
+
 (function () {
   const supportsModulePreload = () => {
     const linkRelList = document.createElement('link').relList;
@@ -38,18 +40,20 @@ import '../scss/styles.scss';
   }
 })();
 
-//   declaracion de variables
-// Aquí se declaran las referencias a los elementos del DOM
+// 2 Declaraciones iniciales
+// Aquí se declaran las referencias a los elementos del DOM y la lista de tareas.
 const tasksContainer = document.getElementById('tasks');
 const filtersContainer = document.getElementById('filters');
 const form = document.getElementById('form');
 const itemsLeft = document.getElementById('items-left');
 const deleteCompletedBtn = document.getElementById('delete-completed');
-const themeSwitch = document.getElementById('switch');
 const filterButtons = document.querySelectorAll('.filter');
 
-// Filtrar y mostrar tareas
-// Funciones para filtrar y mostrar las tareas según el filtro activo (todas, activas, completadas)
+let tasks = [{ id: Date.now(), task: 'Make a todo app', completed: false }];
+
+// 3Filtrar y mostrar tareas
+// Funciones para filtrar y mostrar las tareas según el filtro activo (todas, activas, completadas).
+
 const getFilteredTasks = () => {
   const activeFilter = document.querySelector('.filter--active').dataset.filter;
   return activeFilter === 'active'
@@ -64,7 +68,6 @@ const updateItemsLeft = () => {
   itemsLeft.textContent =
     tasks.length === 0 ? 'No tasks' : activeTasks === 0 ? 'All tasks completed!' : `${activeTasks} items left`;
 };
-
 const renderTasks = () => {
   const fragment = document.createDocumentFragment();
   getFilteredTasks().forEach(task => {
@@ -99,7 +102,7 @@ const renderTasks = () => {
 
 renderTasks();
 
-// Añadir, eliminar y completar tareas
+// 4Añadir, eliminar y completar tareas
 // Funciones para añadir, eliminar y completar tareas, además de gestionar los filtros.
 const addTask = taskText => {
   tasks.push({ id: Date.now(), task: taskText, completed: false });
@@ -129,10 +132,8 @@ const clearCompletedTasks = () => {
   tasks = tasks.filter(task => !task.completed);
   renderTasks();
 };
-
-// Event Listeners
+// 5Event Listeners
 // Configuración de los event listeners para manejar las interacciones del usuario.
-
 form.addEventListener('submit', event => {
   event.preventDefault();
   const taskText = event.target.task.value.trim();
