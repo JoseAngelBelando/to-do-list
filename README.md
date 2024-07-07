@@ -1,6 +1,6 @@
 # To-Do-List
 
-![Imagen del proyecto](https://github.com/eduardofierropro/Portafolio-y-CV/blob/main/IMAGEN-DEL-PROYECTO.jpg?raw=true)
+![Imagen del proyecto][(https://github.com/eduardofierropro/Portafolio-y-CV/blob/main/IMAGEN-DEL-PROYECTO.jpg?raw=true)](https://github.com/JoseAngelBelando/to-do-list/blob/main/Captura%20de%20pantalla%202024-07-07%20134406.png)
 
 ## Ejemplo en vivo
 
