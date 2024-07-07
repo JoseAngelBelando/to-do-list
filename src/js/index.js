@@ -49,8 +49,13 @@ const itemsLeft = document.getElementById('items-left');
 const deleteCompletedBtn = document.getElementById('delete-completed');
 const filterButtons = document.querySelectorAll('.filter');
 
-let tasks = [{ id: Date.now(), task: 'Make a todo app', completed: false }];
-
+let tasks = [
+  {
+    id: Date.now(),
+    task: 'Make a todo app',
+    completed: false
+  }
+];
 // 3Filtrar y mostrar tareas
 // Funciones para filtrar y mostrar las tareas según el filtro activo (todas, activas, completadas).
 
