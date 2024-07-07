@@ -1,6 +1,6 @@
 # To-Do-List
 
-![https://github.com/JoseAngelBelando/to-do-list/blob/main/Captura%20de%20pantalla%202024-07-07%20191452.png]
+![Imagen del proyecto](https://github.com/JoseAngelBelando/clock/blob/main/Captura%20de%20pantalla%202024-07-07%20092600.png))
 
 ## Ejemplo en vivo
 
