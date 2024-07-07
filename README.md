@@ -8,7 +8,7 @@
 
 ## Descripción 📑
 
-Lorem ipsum dolor, sit amet consectetur adipisicing elit. A voluptatum et esse, ipsum ipsam debitis ducimus dolorum placeat? Consectetur, soluta vero. Accusamus iure est pariatur, doloremque nam cumque natus unde adipisci laborum ut. At id sapiente consequatur earum. Magnam doloribus, voluptate zumito doloremque obcaecati vel excepturi numquam cupiditate ipsam quisquam!
+El código maneja la precarga de módulos, la gestión de tareas (añadir, eliminar, completar) y la aplicación de filtros para mostrar tareas activas o completadas. 
 
 ## ¿Qué he aprendido en este proyecto? 🙇🏻
 
@@ -31,9 +31,9 @@ Si quieres echar un vistazo al proyecto, te recomiendo:
 
 ## Autor ✒️
 
-**TU NOMBRE**
+**José Ángel Belnado García**
 
-- [micorreo@midominio.com](micorreo@midominio.com)
+- [mJosetxoo33@gmail.com](micorreo@midominio.com)
 - [LinkedIn](https://www.linkedin.com/in/tu-url-de-linkedin/)
 
 ## Instalación
@@ -43,4 +43,4 @@ Este proyecto no necesita de instalación. Simplemente abre la carpeta o haz dob
 ## Licencia 📄
 
 MIT Public License v3.0
-No puede usarse comencialmente.
+No puede usarse comercialmente.
