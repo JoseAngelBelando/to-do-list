@@ -33,7 +33,7 @@ Si quieres echar un vistazo al proyecto, te recomiendo:
 
 **José Ángel Belnado García**
 
-- [mJosetxoo33@gmail.com](micorreo@midominio.com)
+- [Josetxoo33@gmail.com](micorreo@midominio.com)
 - [LinkedIn](https://www.linkedin.com/in/tu-url-de-linkedin/)
 
 ## Instalación
