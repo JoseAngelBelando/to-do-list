@@ -11,10 +11,15 @@ import '../scss/styles.scss';
   const fetchModule = link => {
     if (link.ep) return;
     link.ep = true;
-    const options = {
-      credentials:
-        link.crossOrigin === 'use-credentials' ? 'include' : link.crossOrigin === 'anonymous' ? 'omit' : 'same-origin'
-    };
+    const options = {};
+
+    if (link.crossOrigin === 'use-credentials') {
+      options.credentials = 'include';
+    } else if (link.crossOrigin === 'anonymous') {
+      options.credentials = 'omit';
+    } else {
+      options.credentials = 'same-origin';
+    }
     if (link.integrity) options.integrity = link.integrity;
     if (link.referrerPolicy) options.referrerPolicy = link.referrerPolicy;
     fetch(link.href, options);
