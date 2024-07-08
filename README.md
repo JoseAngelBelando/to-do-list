@@ -1,10 +1,10 @@
 # To-Do-List
 
-![(https://github.com/eduardofierropro/Portafolio-y-CV/blob/main/IMAGEN-DEL-PROYECTO.jpg?raw=true)](https://github.com/JoseAngelBelando/to-do-list/blob/main/Captura%20de%20pantalla%202024-07-07%20134406.png)
+![Imagen del proyecto](https://github.com/JoseAngelBelando/to-do-list/blob/main/Captura%20de%20pantalla%202024-07-07%20191452.png))
 
 ## Ejemplo en vivo
 
-- [[URL-de-github-pages-de-este-proyecto](https://github.com/JoseAngelBelando/to-do-list)]
+https://github.com/JoseAngelBelando/to-do-list
 
 ## Descripción 📑
 
