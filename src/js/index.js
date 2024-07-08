@@ -3,16 +3,21 @@ import '../scss/styles.scss';
 //1 Carga de módulos y observador de mutaciones
 
 (function () {
+  // Función para verificar si el navegador soporta 'modulepreload'
   const supportsModulePreload = () => {
     const linkRelList = document.createElement('link').relList;
     return linkRelList && linkRelList.supports && linkRelList.supports('modulepreload');
   };
 
+  // Función para cargar un módulo a través de una etiqueta 'link'
   const fetchModule = link => {
+    // Si el módulo ya fue precargado, salir de la función
     if (link.ep) return;
+    // Marcar el módulo como precargado
     link.ep = true;
-    const options = {};
 
+    // Configurar las opciones de la petición 'fetch'
+    const options = {};
     if (link.crossOrigin === 'use-credentials') {
       options.credentials = 'include';
     } else if (link.crossOrigin === 'anonymous') {
@@ -22,26 +27,36 @@ import '../scss/styles.scss';
     }
     if (link.integrity) options.integrity = link.integrity;
     if (link.referrerPolicy) options.referrerPolicy = link.referrerPolicy;
+
+    // Realizar la petición 'fetch' para precargar el módulo
     fetch(link.href, options);
   };
 
+  // Función para cargar todos los módulos con 'rel="modulepreload"'
   const loadModulePreloads = () => {
     document.querySelectorAll('link[rel="modulepreload"]').forEach(fetchModule);
   };
 
+  // Si el navegador no soporta 'modulepreload', cargar los módulos manualmente
   if (!supportsModulePreload()) {
     loadModulePreloads();
-    new MutationObserver(mutations => {
-      for (const mutation of mutations) {
+
+    // Crear un observador para detectar cambios en el DOM
+    const observer = new MutationObserver(mutations => {
+      mutations.forEach(mutation => {
         if (mutation.type === 'childList') {
           mutation.addedNodes.forEach(node => {
+            // Si se añade una nueva etiqueta 'link' con 'rel="modulepreload"', cargar el módulo
             if (node.tagName === 'LINK' && node.rel === 'modulepreload') {
               fetchModule(node);
             }
           });
         }
-      }
-    }).observe(document, { childList: true, subtree: true });
+      });
+    });
+
+    // Observar el documento para detectar cambios en los hijos y en el subárbol
+    observer.observe(document, { childList: true, subtree: true });
   }
 })();
 
@@ -65,18 +80,31 @@ let tasks = [
 // Funciones para filtrar y mostrar las tareas según el filtro activo (todas, activas, completadas).
 
 const getFilteredTasks = () => {
+  // Obtener el filtro activo
   const activeFilter = document.querySelector('.filter--active').dataset.filter;
-  return activeFilter === 'active'
-    ? tasks.filter(task => !task.completed)
-    : activeFilter === 'completed'
-    ? tasks.filter(task => task.completed)
-    : tasks;
+
+  // Devolver las tareas filtradas según el filtro activo
+  if (activeFilter === 'active') {
+    return tasks.filter(task => !task.completed);
+  } else if (activeFilter === 'completed') {
+    return tasks.filter(task => task.completed);
+  } else {
+    return tasks;
+  }
 };
 
 const updateItemsLeft = () => {
+  // Obtener el número de tareas activas
   const activeTasks = tasks.filter(task => !task.completed).length;
-  itemsLeft.textContent =
-    tasks.length === 0 ? 'No tasks' : activeTasks === 0 ? 'All tasks completed!' : `${activeTasks} items left`;
+
+  // Actualizar el texto en 'itemsLeft' basado en el número de tareas
+  if (tasks.length === 0) {
+    itemsLeft.textContent = 'No tasks';
+  } else if (activeTasks === 0) {
+    itemsLeft.textContent = 'All tasks completed!';
+  } else {
+    itemsLeft.textContent = `${activeTasks} items left`;
+  }
 };
 const renderTasks = () => {
   const fragment = document.createDocumentFragment();
@@ -115,7 +143,17 @@ renderTasks();
 // 4Añadir, eliminar y completar tareas
 // Funciones para añadir, eliminar y completar tareas, además de gestionar los filtros.
 const addTask = taskText => {
-  tasks.push({ id: Date.now(), task: taskText, completed: false });
+  // Crear un nuevo objeto de tarea
+  const newTask = {
+    id: Date.now(),
+    task: taskText,
+    completed: false
+  };
+
+  // Añadir la nueva tarea a la lista de tareas
+  tasks.push(newTask);
+
+  // Renderizar las tareas actualizadas
   renderTasks();
 };
 
