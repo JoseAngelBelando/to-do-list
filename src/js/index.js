@@ -1,66 +1,7 @@
 // El styles lo importamos aquí, ya se carga después al compilar todo
 import '../scss/styles.scss';
-//1 Carga de módulos y observador de mutaciones
 
-(function () {
-  // Función para verificar si el navegador soporta 'modulepreload'
-  const supportsModulePreload = () => {
-    const linkRelList = document.createElement('link').relList;
-    return linkRelList && linkRelList.supports && linkRelList.supports('modulepreload');
-  };
-
-  // Función para cargar un módulo a través de una etiqueta 'link'
-  const fetchModule = link => {
-    // Si el módulo ya fue precargado, salir de la función
-    if (link.ep) return;
-    // Marcar el módulo como precargado
-    link.ep = true;
-
-    // Configurar las opciones de la petición 'fetch'
-    const options = {};
-    if (link.crossOrigin === 'use-credentials') {
-      options.credentials = 'include';
-    } else if (link.crossOrigin === 'anonymous') {
-      options.credentials = 'omit';
-    } else {
-      options.credentials = 'same-origin';
-    }
-    if (link.integrity) options.integrity = link.integrity;
-    if (link.referrerPolicy) options.referrerPolicy = link.referrerPolicy;
-
-    // Realizar la petición 'fetch' para precargar el módulo
-    fetch(link.href, options);
-  };
-
-  // Función para cargar todos los módulos con 'rel="modulepreload"'
-  const loadModulePreloads = () => {
-    document.querySelectorAll('link[rel="modulepreload"]').forEach(fetchModule);
-  };
-
-  // Si el navegador no soporta 'modulepreload', cargar los módulos manualmente
-  if (!supportsModulePreload()) {
-    loadModulePreloads();
-
-    // Crear un observador para detectar cambios en el DOM
-    const observer = new MutationObserver(mutations => {
-      mutations.forEach(mutation => {
-        if (mutation.type === 'childList') {
-          mutation.addedNodes.forEach(node => {
-            // Si se añade una nueva etiqueta 'link' con 'rel="modulepreload"', cargar el módulo
-            if (node.tagName === 'LINK' && node.rel === 'modulepreload') {
-              fetchModule(node);
-            }
-          });
-        }
-      });
-    });
-
-    // Observar el documento para detectar cambios en los hijos y en el subárbol
-    observer.observe(document, { childList: true, subtree: true });
-  }
-})();
-
-// 2 Declaraciones iniciales
+// 1 Declaraciones iniciales
 // Aquí se declaran las referencias a los elementos del DOM y la lista de tareas.
 const tasksContainer = document.getElementById('tasks');
 const filtersContainer = document.getElementById('filters');
@@ -76,7 +17,7 @@ let tasks = [
     completed: false
   }
 ];
-// 3Filtrar y mostrar tareas
+// 2Filtrar y mostrar tareas
 // Funciones para filtrar y mostrar las tareas según el filtro activo (todas, activas, completadas).
 
 const getFilteredTasks = () => {
