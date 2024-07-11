@@ -8,7 +8,7 @@ https://github.com/JoseAngelBelando/to-do-list
 
 ## Descripción 📑
 
-El código maneja la precarga de módulos, la gestión de tareas (añadir, eliminar, completar) y la aplicación de filtros para mostrar tareas activas o completadas. 
+El código maneja la gestión de tareas (añadir, eliminar, completar) y la aplicación de filtros para mostrar tareas activas o completadas. 
 
 ## ¿Qué he aprendido en este proyecto? 🙇🏻
 
