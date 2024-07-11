@@ -1,139 +1,138 @@
 // El styles lo importamos aquí, ya se carga después al compilar todo
 import '../scss/styles.scss';
 
-// 1 Declaraciones iniciales
-// Aquí se declaran las referencias a los elementos del DOM y la lista de tareas.
-const tasksContainer = document.getElementById('tasks');
-const filtersContainer = document.getElementById('filters');
-const form = document.getElementById('form');
-const itemsLeft = document.getElementById('items-left');
-const deleteCompletedBtn = document.getElementById('delete-completed');
-const filterButtons = document.querySelectorAll('.filter');
+import iconCross from '../assets/images/icon-cross.svg';
 
-let tasks = [
+const tasksElement = document.getElementById('tasks');
+const filtersElement = document.getElementById('filters');
+const formElement = document.getElementById('form');
+const itemsLeftElement = document.getElementById('items-left');
+const deleteCompleteElement = document.getElementById('delete-completed');
+const switchElement = document.getElementById('switch');
+const allFilters = document.querySelectorAll('.filter');
+
+let allTasks = [
   {
     id: Date.now(),
-    task: 'Make a todo app',
+    task: 'Comprar el pan',
     completed: false
   }
 ];
-// 2Filtrar y mostrar tareas
-// Funciones para filtrar y mostrar las tareas según el filtro activo (todas, activas, completadas).
 
-const getFilteredTasks = () => {
-  // Obtener el filtro activo
-  const activeFilter = document.querySelector('.filter--active').dataset.filter;
+const countItemsLeft = () => {
+  if (allTasks.length === 0) {
+    itemsLeftElement.textContent = 'No tasks';
+    return;
+  }
 
-  // Devolver las tareas filtradas según el filtro activo
-  if (activeFilter === 'active') {
-    return tasks.filter(task => !task.completed);
-  } else if (activeFilter === 'completed') {
-    return tasks.filter(task => task.completed);
+  const itemsLeft = allTasks.filter(task => !task.completed).length;
+  if (itemsLeft === 0) {
+    itemsLeftElement.textContent = 'All tasks completed!';
   } else {
-    return tasks;
+    itemsLeftElement.textContent = `${itemsLeft} items left`;
   }
 };
 
-const updateItemsLeft = () => {
-  // Obtener el número de tareas activas
-  const activeTasks = tasks.filter(task => !task.completed).length;
-
-  // Actualizar el texto en 'itemsLeft' basado en el número de tareas
-  if (tasks.length === 0) {
-    itemsLeft.textContent = 'No tasks';
-  } else if (activeTasks === 0) {
-    itemsLeft.textContent = 'All tasks completed!';
-  } else {
-    itemsLeft.textContent = `${activeTasks} items left`;
-  }
-};
-const renderTasks = () => {
+const insertTasks = (tasksToRender = allTasks) => {
   const fragment = document.createDocumentFragment();
-  getFilteredTasks().forEach(task => {
-    const taskContainer = document.createElement('div');
-    taskContainer.classList.add('task-container');
 
-    const checkbox = document.createElement('input');
-    checkbox.classList.add('task-check');
-    checkbox.type = 'checkbox';
-    checkbox.checked = task.completed;
-    checkbox.id = task.id;
-    checkbox.addEventListener('change', () => toggleTaskCompletion(task.id));
+  tasksToRender.forEach(task => {
+    const newTaskContainer = document.createElement('div');
+    newTaskContainer.classList.add('task-container');
 
-    const label = document.createElement('label');
-    label.classList.add('task-text');
-    label.textContent = task.task;
-    label.htmlFor = task.id;
+    const newTaskCheck = document.createElement('input');
+    newTaskCheck.classList.add('task-check');
+    newTaskCheck.type = 'checkbox';
+    newTaskCheck.checked = task.completed;
+    newTaskCheck.id = task.id;
 
-    const deleteIcon = document.createElement('img');
-    deleteIcon.classList.add('task-delete');
-    deleteIcon.src = './assets/images/icon-cross.svg';
-    deleteIcon.addEventListener('click', () => deleteTask(task.id));
+    const newTaskText = document.createElement('label');
+    newTaskText.classList.add('task-text');
+    newTaskText.textContent = task.task;
+    newTaskText.htmlFor = task.id;
 
-    taskContainer.append(checkbox, label, deleteIcon);
-    fragment.append(taskContainer);
+    const newTaskDelete = document.createElement('img');
+    newTaskDelete.classList.add('task-delete');
+    newTaskDelete.src = iconCross;
+
+    newTaskDelete.addEventListener('click', () => deleteTask(task.id));
+    newTaskCheck.addEventListener('change', () => completeTask(task.id));
+
+    newTaskContainer.append(newTaskCheck, newTaskText, newTaskDelete);
+
+    fragment.append(newTaskContainer);
   });
 
-  tasksContainer.textContent = '';
-  tasksContainer.append(fragment);
-  updateItemsLeft();
+  tasksElement.textContent = '';
+  tasksElement.append(fragment);
+  countItemsLeft();
 };
 
-renderTasks();
+const saveTask = task => {
+  allTasks.push(task);
+  insertTasks();
+};
 
-// 4Añadir, eliminar y completar tareas
-// Funciones para añadir, eliminar y completar tareas, además de gestionar los filtros.
-const addTask = taskText => {
-  // Crear un nuevo objeto de tarea
+const createTask = task => {
   const newTask = {
     id: Date.now(),
-    task: taskText,
+    task: task,
     completed: false
   };
 
-  // Añadir la nueva tarea a la lista de tareas
-  tasks.push(newTask);
-
-  // Renderizar las tareas actualizadas
-  renderTasks();
+  saveTask(newTask);
 };
 
-const deleteTask = taskId => {
-  tasks = tasks.filter(task => task.id !== taskId);
-  renderTasks();
+const deleteTask = id => {
+  allTasks = allTasks.filter(task => task.id !== id);
+  insertTasks();
 };
 
-const toggleTaskCompletion = taskId => {
-  tasks = tasks.map(task => {
-    if (task.id === taskId) task.completed = !task.completed;
+const completeTask = id => {
+  allTasks = allTasks.map(task => {
+    if (task.id === id) {
+      task.completed = !task.completed;
+    }
     return task;
   });
-  renderTasks();
+
+  insertTasks();
 };
 
-const applyFilter = filterElement => {
-  filterButtons.forEach(button => button.classList.remove('filter--active'));
-  filterElement.classList.add('filter--active');
-  renderTasks();
+const deleteAllCompletedTasks = () => {
+  allTasks = allTasks.filter(task => !task.completed);
+  insertTasks();
 };
 
-const clearCompletedTasks = () => {
-  tasks = tasks.filter(task => !task.completed);
-  renderTasks();
-};
-// 5Event Listeners
-// Configuración de los event listeners para manejar las interacciones del usuario.
-form.addEventListener('submit', event => {
-  event.preventDefault();
-  const taskText = event.target.task.value.trim();
-  if (taskText) {
-    addTask(taskText);
-    event.target.reset();
+const getFilteredTasks = filter => {
+  let filteredTasks = allTasks;
+  if (filter === 'active') {
+    filteredTasks = allTasks.filter(task => !task.completed);
+  } else if (filter === 'completed') {
+    filteredTasks = allTasks.filter(task => task.completed);
   }
+
+  return filteredTasks;
+};
+
+const filterTasks = event => {
+  if (!event.target.dataset.filter) return;
+  allFilters.forEach(filter => filter.classList.remove('filter--active'));
+  event.target.classList.add('filter--active');
+  const filteredTasks = getFilteredTasks(event.target.dataset.filter);
+  insertTasks(filteredTasks);
+};
+
+insertTasks();
+
+formElement.addEventListener('submit', event => {
+  event.preventDefault();
+  const inputValue = event.target.task.value;
+  if (!inputValue) return;
+  createTask(inputValue);
+  event.target.reset();
 });
 
-deleteCompletedBtn.addEventListener('click', clearCompletedTasks);
+deleteCompleteElement.addEventListener('click', deleteAllCompletedTasks);
 
-filtersContainer.addEventListener('click', event => {
-  if (event.target.dataset.filter) applyFilter(event.target);
-});
+filtersElement.addEventListener('click', filterTasks);
